@@ -1,7 +1,9 @@
 # GitHub Actions CDK Fix
 
 ## 🐛 Problem
+
 GitHub Actions was failing with the error:
+
 ```
 sh: 1: cdk: not found
 ```
@@ -11,22 +13,27 @@ This happened because the CDK CLI was not available in the GitHub Actions enviro
 ## ✅ Solution Applied
 
 ### 1. **Updated GitHub Actions Workflows**
+
 - **Before**: Used `npm run cdk bootstrap` and `npm run deploy` which relied on globally installed CDK
 - **After**: Uses `npx cdk bootstrap` and `npx cdk deploy` which uses the locally installed CDK
 
 ### 2. **Added CDK CLI as Dev Dependency**
+
 Updated `package.json`:
+
 ```json
 {
   "devDependencies": {
-    "aws-cdk": "^2.100.0",
+    "aws-cdk": "^2.100.0"
     // ...other deps
   }
 }
 ```
 
 ### 3. **Updated NPM Scripts**
+
 Updated all CDK scripts to use `npx`:
+
 ```json
 {
   "scripts": {
@@ -42,6 +49,7 @@ Updated all CDK scripts to use `npx`:
 ```
 
 ### 4. **Updated All Workflows**
+
 - **deploy.yml**: Uses `npx cdk` for bootstrap and deploy
 - **destroy.yml**: Uses `npx cdk destroy`
 - **test workflow**: Uses `npx cdk synth`
