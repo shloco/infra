@@ -8,6 +8,8 @@ This guide will help you set up automated deployment of your CDK infrastructure 
 2. **AWS Account**: Access to an AWS account where you want to deploy
 3. **AWS IAM User**: A dedicated IAM user for GitHub Actions with appropriate permissions
 
+**Note**: The CDK CLI is included as a dev dependency in the project, so GitHub Actions will automatically have access to it via `npx cdk` commands.
+
 ## 🔑 AWS IAM Setup
 
 ### Step 1: Create an IAM User for GitHub Actions

@@ -43,7 +43,7 @@ jobs:
         run: npm run build
 
       - name: CDK Synth
-        run: npm run synth
+        run: npx cdk synth
 
   deploy-staging:
     name: Deploy to Staging
@@ -78,13 +78,13 @@ jobs:
       - name: CDK Bootstrap (if needed)
         run: |
           if ! aws cloudformation describe-stacks --stack-name CDKToolkit --region ${{ env.AWS_REGION }} >/dev/null 2>&1; then
-            npm run cdk bootstrap
+            npx cdk bootstrap
           else
             echo "CDK already bootstrapped"
           fi
 
       - name: CDK Deploy Staging
-        run: npm run deploy -- --require-approval never
+        run: npx cdk deploy --require-approval never
         env:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION: ${{ env.AWS_REGION }}
@@ -122,13 +122,13 @@ jobs:
       - name: CDK Bootstrap (if needed)
         run: |
           if ! aws cloudformation describe-stacks --stack-name CDKToolkit --region ${{ env.AWS_REGION }} >/dev/null 2>&1; then
-            npm run cdk bootstrap
+            npx cdk bootstrap
           else
             echo "CDK already bootstrapped"
           fi
 
       - name: CDK Deploy Production
-        run: npm run deploy -- --require-approval never
+        run: npx cdk deploy --require-approval never
         env:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION: ${{ env.AWS_REGION }}

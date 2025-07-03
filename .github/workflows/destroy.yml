@@ -58,7 +58,7 @@ jobs:
         run: npm run build
 
       - name: CDK Destroy
-        run: npm run destroy -- --force
+        run: npx cdk destroy --force
         env:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION: ${{ env.AWS_REGION }}
