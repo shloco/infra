@@ -10,6 +10,11 @@ on:
       - main
       - master
 
+# Required for OIDC authentication
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
 env:
   AWS_REGION: us-east-2
   NODE_VERSION: '20'
@@ -68,8 +73,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Build project
@@ -112,8 +116,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Build project
@@ -129,9 +132,6 @@ jobs:
 
       - name: CDK Deploy Production
         run: npx cdk deploy --require-approval never
-        env:
-          CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
-          CDK_DEFAULT_REGION: ${{ env.AWS_REGION }}
 
       - name: Post-deployment verification
         run: |
