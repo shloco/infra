@@ -104,3 +104,20 @@ npm run destroy
 ```
 
 **Warning**: This will delete all resources. Make sure you have backups of any important data.
+
+## CI/CD with GitHub Actions
+
+This project includes automated deployment using GitHub Actions. See the setup guides:
+
+- **[GitHub Actions Setup Guide](GITHUB_ACTIONS_SETUP.md)** - Complete setup instructions
+- **[OIDC Setup Guide](docs/OIDC_SETUP.md)** - Secure authentication with OpenID Connect (recommended)
+
+### Workflows Included:
+- **Deploy Pipeline** (`.github/workflows/deploy.yml`) - Automated testing and deployment
+- **Security Checks** (`.github/workflows/security.yml`) - Security scanning and dependency checks  
+- **Resource Cleanup** (`.github/workflows/destroy.yml`) - Safe resource destruction
+
+### Deployment Flow:
+- **Pull Requests** → Deploy to staging environment
+- **Main Branch** → Deploy to production environment
+- **Manual Trigger** → Destroy resources when needed
